@@ -235,12 +235,6 @@
 		i2c-gpio,delay-us = <10>;
 		#address-cells = <1>;
 		#size-cells = <0>;
-
-		alc5658: alc5658@1a {
-			#sound-dai-cells = <0>;
-			compatible = "realtek,rt5658";
-			reg = <0x1a>;
-		};
 	};
 
 	i2c_gpio7:i2c@7 {
