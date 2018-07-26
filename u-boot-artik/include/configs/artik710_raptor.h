@@ -101,7 +101,7 @@
  *	U-Boot Environments
  */
 /* refer to common/env_common.c	*/
-#define CONFIG_BOOTDELAY			3
+#define CONFIG_BOOTDELAY			1
 
 /*-----------------------------------------------------------------------
  * Miscellaneous configurable options
