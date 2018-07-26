@@ -1,0 +1,29 @@
+Source: nx-scaler
+Priority: optional
+Maintainer: Chanho Park <chanho61.park@samsung.com>,
+	JongKeun Choi <jkchoi@nexell.co.kr>,
+	Sungwoo Park <swpark@nexell.co.kr>
+Uploaders: Chanho Park <chanho61.park@samsung.com>
+Build-Depends:
+ debhelper (>= 9),
+ dh-autoreconf,
+Standards-Version: 3.9.8
+Section: libs
+
+Package: nx-scaler
+Architecture: any-arm arm64
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Description: Nexell Scaler Library
+
+Package: nx-scaler-dev
+Section: libdevel
+Architecture: any
+Depends:
+ nx-scaler (= ${binary:Version}),
+ ${misc:Depends},
+Multi-Arch: same
+Description: Development package for nexell scaler

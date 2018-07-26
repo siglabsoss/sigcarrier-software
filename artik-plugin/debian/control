@@ -1,0 +1,46 @@
+Source: artik-plugin
+Section: Miscellaneous
+Priority: standard
+Maintainer: Chanho Park <chanho61.park@samsung.com>
+Uploaders: Chanho Park <chanho61.park@samsung.com>
+Build-Depends: debhelper (>= 9)
+
+Package: artik-plugin
+Architecture: any-arm arm64
+Depends: ${misc:Depends}, dnsmasq, openssh-server, wpasupplicant
+Standards-Version: 3.9.6
+Description: ARTIK plugin files
+
+Package: artik-plugin-bluetooth-common
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK blueooth common plugin
+Depends: bluez
+
+Package: artik-plugin-network-common
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK network common plugin
+Depends: connman
+
+Package: artik-plugin-audio-common
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK audio common plugin
+Depends: pulseaudio
+
+Package: artik-plugin-usb-common
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK usb common plugin
+
+Package: artik-plugin-wifi-common
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK wifi common plugin
+Depends: python3
+
+Package: artik-plugin-license
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK license plugin

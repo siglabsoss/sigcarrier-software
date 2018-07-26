@@ -1,0 +1,10 @@
+#!/bin/sh  
+
+echo "I: create artik user"
+adduser --gecos artik --disabled-login artik
+
+echo "I: set artik user password"
+echo "artik:artik" | chpasswd
+
+echo "I: set root password"
+echo "root:root" | chpasswd

@@ -1,0 +1,29 @@
+artik-repos (1.0.4) xenial; urgency=medium
+
+  * Install ARTIK E2E(SDK/ENM/BLE Onboarding) repository
+
+ -- Chanho Park <chanho61.park@samsung.com>  Mon, 16 Oct 2017 13:20:45 +0900
+
+artik-repos (1.0.3) xenial; urgency=medium
+
+  * Install artik platform key during package installation
+
+ -- Chanho Park <chanho61.park@samsung.com>  Wed, 11 Oct 2017 14:16:45 +0900
+
+artik-repos (1.0.2) unstable; urgency=medium
+
+  * Add artik533s, artik710s repository
+
+ -- jae-young <jae-young@MyLinux>  Mon, 18 Sep 2017 21:01:44 +0900
+
+artik-repos (1.0.1) unstable; urgency=medium
+
+  * Add artik530s repository
+
+ -- Chanho Park <chanho61.park@samsung.com>  Tue, 05 Sep 2017 19:16:53 +0900
+
+artik-repos (1.0.0) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Jae-young Hwang <j-zero.hwang@samsung.com>  Thu, 10 Aug 2017 22:41:52 +0900

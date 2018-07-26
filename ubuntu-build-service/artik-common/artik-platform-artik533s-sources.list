@@ -1,0 +1,5 @@
+deb http://repo.artik.cloud/artik/bin/pub/artik-platform/ubuntu/artik533s A533s_os_3.0.0 main
+deb-src http://repo.artik.cloud/artik/bin/pub/artik-platform/ubuntu/artik533s A533s_os_3.0.0 main
+
+deb http://repo.artik.cloud/artik/bin/pub/artik-platform/ubuntu/artik533s updates main
+deb-src http://repo.artik.cloud/artik/bin/pub/artik-platform/ubuntu/artik533s updates main

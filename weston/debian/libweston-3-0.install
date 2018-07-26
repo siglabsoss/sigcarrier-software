@@ -1,0 +1,9 @@
+usr/lib/*/libweston-3.so.*
+usr/lib/*/libweston-desktop-3.so.*
+usr/lib/*/libweston-3/drm-backend.so
+usr/lib/*/libweston-3/fbdev-backend.so
+usr/lib/*/libweston-3/gl-renderer.so
+usr/lib/*/libweston-3/headless-backend.so
+usr/lib/*/libweston-3/wayland-backend.so
+usr/lib/*/libweston-3/x11-backend.so
+usr/lib/*/libweston-3/xwayland.so

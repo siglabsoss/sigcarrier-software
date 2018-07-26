@@ -1,0 +1,3 @@
+scripts/modules-load.d/dhd.conf etc/modules-load.d/
+scripts/modprobe.d/dhd.conf etc/modprobe.d/
+prebuilt/wifi/* etc/wifi/

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+	install|upgrade)
+		if [ -e /etc/fstab ]; then
+			rm -f /etc/fstab
+		fi
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

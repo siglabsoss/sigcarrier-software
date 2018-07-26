@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -e
+
+ARTIK_E2E_KEY="55955AEB"
+
+case "$1" in
+	remove|purge)
+		if [ -x /usr/bin/apt-key ]; then
+			apt-key del "$ARTIK_E2E_KEY"
+		fi
+		;;
+
+	upgrade|deconfigure)
+		;;
+
+	failed-upgrade)
+		;;
+
+	*)
+		echo "prerm called with unknown argument \`$1'" >&2
+		exit 1
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

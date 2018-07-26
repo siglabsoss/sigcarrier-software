@@ -1,0 +1,11 @@
+artik-ubuntu-meta-base
+artik-ubuntu-meta-network
+artik-ubuntu-meta-misc
+
+artik-plugin-artik10-bluetooth
+artik-plugin-artik10-fstab
+artik-plugin-artik10-audio
+artik-plugin-artik10-wifi
+artik-plugin-artik10-usb
+
+libdrm-exynos1

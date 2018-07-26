@@ -1,0 +1,2 @@
+scripts/rules/10-local.rules etc/udev/rules.d/
+prebuilt/bluetooth/common/* etc/bluetooth/

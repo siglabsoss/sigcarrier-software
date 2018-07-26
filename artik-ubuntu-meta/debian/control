@@ -1,0 +1,34 @@
+Source: artik-ubuntu-meta
+Section: metapackages
+Priority: optional
+Maintainer: Chanho Park <chanho61.park@samsung.com>
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 7.0.8), germinate:all (>= 1.18)
+
+Package: artik-ubuntu-meta-base
+Architecture: any
+Depends: ${misc:Depends}, ${germinate:Depends}
+Recommends: ${germinate:Recommends}
+Description: Base packages of ARTIK Ubuntu
+ This package depends on all of the packages in the ARTIK Ubuntu base system.
+
+Package: artik-ubuntu-meta-network
+Architecture: any
+Depends: ${misc:Depends}, ${germinate:Depends}
+Recommends: ${germinate:Recommends}
+Description: Network packages of ARTIK Ubuntu
+ This package depends on all of the packages in the ARTIK Ubuntu network system.
+
+Package: artik-ubuntu-meta-misc
+Architecture: any
+Depends: ${misc:Depends}, ${germinate:Depends}
+Recommends: ${germinate:Recommends}
+Description: Miscellaneous packages of ARTIK Ubuntu
+ This package depends on all of the packages in the ARTIK Ubuntu misc system.
+
+Package: artik-ubuntu-meta-nexell
+Architecture: any
+Depends: ${misc:Depends}, ${germinate:Depends}
+Recommends: ${germinate:Recommends}
+Description: Nexell packages of ARTIK Ubuntu
+ This package depends on all of the packages in the ARTIK Ubuntu nexell system.

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "I: Remove apt proxy conf"
+rm -f ./binary/etc/apt/apt.conf
+rm -f ./binary/etc/apt/apt.conf.d/01-proxy

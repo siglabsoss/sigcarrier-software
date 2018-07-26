@@ -1,0 +1,22 @@
+Source: tomy-gateway
+Section: devel
+Priority: optional
+Maintainer: Inho Oh <inho48.oh@samsung.com>
+Build-Depends: debhelper (>=9),
+	libssl-dev
+Standards-Version: 3.9.6
+Homepage: https://github.com/eclipse/paho.mqtt-sn.embedded-c
+#Vcs-Git: https://github.com/eclipse/paho.mqtt-sn.embedded-c
+#Vcs-Browser: https://github.com/eclipse/paho.mqtt-sn.embedded-c
+
+Package: tomy-gateway
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: MQTT-SN gateway application
+
+Package: tomy-gateway-dbg
+Section: debug
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: MQTT-SN gateway application - Debug symbols
+

@@ -1,0 +1,21 @@
+Source: gst-plugins-camera-s5p6818
+Section: libs
+Priority: optional
+Maintainer: Chanho Park <chanho61.park@samsung.com>,
+	Sooman Jeong <sm5.jeong@samsung.com>,
+	HyejungKwon <cjscld15@nexell.co.kr>,
+	Sungwoo Park <swpark@nexell.co.kr>
+Uploaders: Chanho Park <chanho61.park@samsung.com>
+Build-Depends: libgstreamer1.0-dev (>= 1.8.0),  libgstreamer-plugins-base1.0-dev (>= 1.8.1), autotools-dev, dh-autoreconf, automake (>= 1.14), autoconf (>= 2.69), libtool (>= 2.2.6), autopoint (>= 0.17), debhelper (>= 9), dpkg-dev (>= 1.15.1), pkg-config (>= 0.11.0), libglib2.0-dev (>= 2.40), gstreamer1.0-plugins-base (>= 1.8.0), nx-drm-allocator-dev, nx-v4l2-dev, nx-gst-meta-dev
+Standards-Version: 3.9.3
+
+Package: gstreamer1.0-plugins-camera-s5p6818
+Architecture: any-arm arm64
+Section: libs
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         gstreamer1.0-plugins-base,
+	 nx-drm-allocator,
+	 nx-v4l2,
+	 nx-gst-meta
+Description: Gstreamer renderer plugin

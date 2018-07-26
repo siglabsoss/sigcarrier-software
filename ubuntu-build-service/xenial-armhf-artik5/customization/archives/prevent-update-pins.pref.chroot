@@ -1,0 +1,3 @@
+Package: pulseaudio* libpulse*
+Pin: version 1:8.0-0ubuntu3.3
+Pin-Priority: -1

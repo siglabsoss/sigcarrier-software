@@ -1,0 +1,27 @@
+# Packages needed for artik - Nano
+apt
+apt-utils
+console-setup
+debconf
+gnupg
+ifupdown
+initramfs-tools
+initscripts
+iproute
+iputils-ping
+isc-dhcp-client
+kbd
+makedev
+mawk
+mountall
+net-tools
+netbase
+netcat-openbsd
+ntpdate
+procps
+python-minimal
+rsyslog
+sudo
+ubuntu-keyring
+udev
+whiptail

@@ -1,0 +1,49 @@
+Source: artik-plugin-artik710
+Section: Miscellaneous
+Priority: standard
+Maintainer: Chanho Park <chanho61.park@samsung.com>
+Uploaders: Chanho Park <chanho61.park@samsung.com>
+Build-Depends: debhelper (>= 9)
+
+Package: artik-plugin-artik710-bluetooth
+Architecture: any-arm arm64
+Standards-Version: 3.9.6
+Description: ARTIK710 bluetooth plugin files
+Depends: artik-plugin-bluetooth-common
+
+Package: artik-plugin-artik710-fstab
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK710 fstab
+
+Package: artik-plugin-artik710-audio
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK710 audio plugin
+Depends: artik-plugin-audio-common
+
+Package: artik-plugin-artik710-wifi
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK710 wifi plugin
+
+Package: artik-plugin-artik710-usb
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK710 usb plugin
+Depends: artik-plugin-usb-common
+
+Package: artik-plugin-artik710-zigbee
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK710 zigbee plugin
+
+Package: artik-plugin-artik710-security
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK710 security plugin
+
+Package: artik-plugin-artik710-license
+Section: Miscellaneous
+Architecture: any-arm arm64
+Description: ARTIK710 license plugin

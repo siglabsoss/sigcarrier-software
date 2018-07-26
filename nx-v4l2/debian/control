@@ -1,0 +1,28 @@
+Source: nx-v4l2
+Priority: optional
+Maintainer: Chanho Park <chanho61.park@samsung.com>,
+	Sungwoo Park <swpark@nexell.co.kr>
+Uploaders: Chanho Park <chanho61.park@samsung.com>
+Build-Depends:
+ debhelper (>= 9),
+ dh-autoreconf,
+Standards-Version: 3.9.8
+Section: libs
+
+Package: nx-v4l2
+Architecture: any-arm arm64
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Description: Nexell V4L2 Library
+
+Package: nx-v4l2-dev
+Section: libdevel
+Architecture: any
+Depends:
+ nx-v4l2 (= ${binary:Version}),
+ ${misc:Depends},
+Multi-Arch: same
+Description: Development package for nexell v4l2

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mkdir -p /usr/local/etc/tomygateway/config/
+ln -s /usr/etc/tomygateway/config/param.conf /usr/local/etc/tomygateway/config/

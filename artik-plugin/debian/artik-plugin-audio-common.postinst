@@ -1,0 +1,44 @@
+#!/bin/sh
+# This script can be called in the following ways:
+#
+# After the package was installed:
+#       <postinst> configure <old-version>
+#
+#
+# If prerm fails during upgrade or fails on failed upgrade:
+#       <old-postinst> abort-upgrade <new-version>
+#
+# If prerm fails during deconfiguration of a package:
+#       <postinst> abort-deconfigure in-favour <new-package> <version>
+#                  removing <old-package> <version>
+#
+# If prerm fails during replacement due to conflict:
+#       <postinst> abort-remove in-favour <new-package> <version>
+
+set -e
+
+case "$1" in
+	configure)
+		systemctl enable pulseaudio.service
+		systemctl enable audiosetting.service
+		sed -i 's/; exit-idle-time = 20/exit-idle-time = -1/g' /etc/pulse/daemon.conf
+		sed -i 's/load-module module-udev-detect/load-module module-udev-detect tsched=0/g' /etc/pulse/default.pa
+		sed -i 's/load-module module-card-restore/#load-module module-card-restore/g' /etc/pulse/default.pa
+		echo "load-module module-switch-on-connect" >> /etc/pulse/default.pa
+		cp /etc/pulse/default.pa /etc/pulse/system.pa
+		/usr/sbin/usermod -G pulse-access root
+		/usr/sbin/usermod -a -G audio pulse
+
+		# pulseaudio settings for bluetooth a2dp_sink
+		sed -i '/<allow own="org.pulseaudio.Server"\/>/a \ \ \ \ <allow send_destination="org.bluez"/>' /etc/dbus-1/system.d/pulseaudio-system.conf
+		;;
+	abort-upgrade|abort-deconfigure|abort-remove)
+		;;
+	*)
+		echo "$0 called with unknown argument \`$1'" 1>&2
+		exit 1
+		;;
+esac
+
+#DEBHELPER#
+exit 0

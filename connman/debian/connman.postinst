@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+    configure)
+        [ -x /usr/share/update-notifier/notify-reboot-required ] && /usr/share/update-notifier/notify-reboot-required
+	sed -i "/^ExecStart=/ s/$/ --nodnsproxy/" /lib/systemd/system/connman.service
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0

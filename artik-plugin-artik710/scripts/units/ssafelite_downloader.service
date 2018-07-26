@@ -1,0 +1,9 @@
+[Unit]
+Description=Ssafe Downloader Service
+After=syslog.target network.target
+
+[Service]
+ExecStart=/usr/bin/fwupd
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,2 @@
+ubuntu/artik-e2e-sources.list /etc/apt/sources.list.d
+ubuntu/artik-e2e-keyring.gpg /var/lib/apt/keyrings

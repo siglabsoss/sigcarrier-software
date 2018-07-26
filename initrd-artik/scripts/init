@@ -1,0 +1,254 @@
+#!/bin/sh
+
+[ -d /dev ] || mkdir -m 0755 /dev
+[ -d /root ] || mkdir -m 0700 /root
+[ -d /sys ] || mkdir /sys
+[ -d /proc ] || mkdir /proc
+[ -d /tmp ] || mkdir /tmp
+[ -d /run ] || mkdir /run
+[ -d /lib/modules ] || mkdir /lib/modules
+[ -d /boot ] || mkdir /boot
+mkdir -p /var/lock
+mount -t sysfs -o nodev,noexec,nosuid sysfs /sys
+mount -t proc -o nodev,noexec,nosuid proc /proc
+
+grep -q '\<quiet\>' /proc/cmdline || echo "Loading, please wait..."
+
+# Note that this only becomes /dev on the real filesystem if udev's scripts
+# are used; which they will be, but it's worth pointing out
+if ! mount -t devtmpfs -o mode=0755 udev /dev; then
+	echo "W: devtmpfs not available, falling back to tmpfs for /dev"
+	mount -t tmpfs -o mode=0755 udev /dev
+	[ -e /dev/console ] || mknod -m 0600 /dev/console c 5 1
+	[ -e /dev/null ] || mknod /dev/null c 1 3
+fi
+mkdir /dev/pts
+mount -t devpts -o noexec,nosuid,gid=5,mode=0620 devpts /dev/pts || true
+mount -t tmpfs -o "noexec,nosuid,size=10%,mode=0755" tmpfs /run
+
+# Export relevant variables
+export ROOT=
+export ROOTDELAY=
+export ROOTFLAGS=
+export ROOTFSTYPE=ext4
+export init=/sbin/init
+export quiet=n
+export readonly=n
+export rootmnt=/root
+export OTA=false
+
+# Parse command line options
+for x in $(cat /proc/cmdline); do
+	case $x in
+	init=*)
+		init=${x#init=}
+		;;
+	root=*)
+		ROOT=${x#root=}
+		case $ROOT in
+		LABEL=*)
+			ROOT="${ROOT#LABEL=}"
+
+			# support any / in LABEL= path (escape to \x2f)
+			case "${ROOT}" in
+			*/*)
+			if command -v sed >/dev/null 2>&1; then
+				ROOT="$(echo ${ROOT} | sed 's,/,\\x2f,g')"
+			else
+				if [ "${ROOT}" != "${ROOT#/}" ]; then
+					ROOT="\x2f${ROOT#/}"
+				fi
+				if [ "${ROOT}" != "${ROOT%/}" ]; then
+					ROOT="${ROOT%/}\x2f"
+				fi
+				IFS='/'
+				newroot=
+				for s in $ROOT; do
+					newroot="${newroot:+${newroot}\\x2f}${s}"
+				done
+				unset IFS
+				ROOT="${newroot}"
+			fi
+			esac
+			ROOT="/dev/disk/by-label/${ROOT}"
+			;;
+		UUID=*)
+			ROOT="/dev/disk/by-uuid/${ROOT#UUID=}"
+			;;
+		/dev/nfs)
+			[ -z "${BOOT}" ] && BOOT=nfs
+			;;
+		esac
+		;;
+	rootflags=*)
+		ROOTFLAGS="-o ${x#rootflags=}"
+		;;
+	rootfstype=*)
+		ROOTFSTYPE="${x#rootfstype=}"
+		;;
+	rootdelay=*)
+		ROOTDELAY="${x#rootdelay=}"
+		case ${ROOTDELAY} in
+		*[![:digit:].]*)
+			ROOTDELAY=
+			;;
+		esac
+		;;
+	quiet)
+		quiet=y
+		;;
+	ro)
+		readonly=y
+		;;
+	rw)
+		readonly=n
+		;;
+	recovery)
+		recovery=y
+		;;
+	emergency_shell)
+		emergency_shell=y
+		;;
+	bootfrom=*)
+		BOOTPART=${x#bootfrom=}
+		if [ ${BOOTPART} == 3 ]; then
+			BOOT_PART=3
+			MODULES_PART=6
+		elif [ ${BOOTPART} == 2 ]; then
+			BOOT_PART=2
+			MODULES_PART=5
+		fi
+		;;
+	ota)
+		OTA=true
+		;;
+	rescue=*)
+		RESCUE=${x#rescue=}
+		;;
+	esac
+done
+
+# export BOOT variable value for compcache,
+# so we know if we run from casper
+export BOOT
+
+if [ "$recovery" == "y" ]; then
+	echo "Do recovery"
+	/sbin/sd_recovery.sh
+	exec sh
+fi
+
+if [ "$emergency_shell" == "y" ]; then
+	echo "Enter emergency mode"
+	exec sh
+fi
+
+mdev -s
+
+mount -t ${ROOTFSTYPE} ${ROOT} ${rootmnt} -o errors=remount-ro,noatime,nodiratime
+if [ -e ${rootmnt}/.need_resize ]; then
+	e2fsck -y -f ${ROOT} > /dev/null 2>&1
+	resize2fs ${ROOT} > /dev/null 2>&1
+	rm ${rootmnt}/.need_resize
+	sync
+fi
+
+if [ -e ${rootmnt}/.need_sd_resize ]; then
+	echo "Need to resize the root partition..."
+	umount ${rootmnt}
+	ROOT_START_SECT=`fdisk -u -l ${ROOT%??} | grep ${ROOT} | awk '{ print $2 }'`
+	ROOT_PART=${ROOT#${ROOT%?}}
+	if $OTA; then
+		MODULES0_START_SECT=`fdisk -u -l ${ROOT%??} | grep mmcblk1p6 | awk '{ print $2 }'`
+		MODULES0_END_SECT=`fdisk -u -l ${ROOT%??} | grep mmcblk1p6 | awk '{ print $3 }'`
+		MODULES_START_SECT=`fdisk -u -l ${ROOT%??} | grep mmcblk1p5 | awk '{ print $2 }'`
+		MODULES_END_SECT=`fdisk -u -l ${ROOT%??} | grep mmcblk1p5 | awk '{ print $3 }'`
+		EXTENDED_PART_SECT=`fdisk -u -l ${ROOT%??} | grep mmcblk1p4 | awk '{ print $2 }'`
+		fdisk -u ${ROOT%??} <<EOF>/dev/null
+d
+7
+d
+6
+d
+5
+d
+4
+n
+e
+$EXTENDED_PART_SECT
+
+n
+$MODULES_START_SECT
+$MODULES_END_SECT
+n
+$MODULES0_START_SECT
+$MODULES0_END_SECT
+n
+$ROOT_START_SECT
+
+w
+EOF
+	else
+		fdisk -u ${ROOT%??} <<EOF>/dev/null
+d
+$ROOT_PART
+n
+p
+$ROOT_PART
+$ROOT_START_SECT
+
+w
+EOF
+	fi
+	sync
+	mdev -s
+	e2fsck -y -f ${ROOT} > /dev/null 2>&1
+	mount -t ${ROOTFSTYPE} ${ROOT} ${rootmnt} -o errors=remount-ro,noatime,nodiratime
+	resize2fs ${ROOT} > /dev/null 2>&1
+	rm ${rootmnt}/.need_sd_resize
+	sync
+fi
+
+ROOT_DISK=${ROOT%?}
+if [ "$OTA" == "true" ]; then
+	if [ $RESCUE -eq 0 ]; then
+		/sbin/artik-updater -s
+	else
+		/sbin/artik-updater -f
+	fi
+	# Mount & move boot partition
+	mount -t ${ROOTFSTYPE} ${ROOT_DISK}${BOOT_PART} /boot -o ro
+	[ -d ${rootmnt}/boot ] || mkdir ${rootmnt}/boot
+	mount -n -o move /boot ${rootmnt}/boot
+
+	# Mount & move modules partition
+	mount -t ${ROOTFSTYPE} ${ROOT_DISK}${MODULES_PART} /lib/modules -o ro
+else
+	MODULES_PART=${ROOT_DISK}2
+	mount -t ${ROOTFSTYPE} ${MODULES_PART} /lib/modules -o ro
+fi
+
+[ -d ${rootmnt}/lib/modules ] || mkdir ${rootmnt}/lib/modules
+mount -n -o move /lib/modules ${rootmnt}/lib/modules
+
+mount -n -o move /dev ${rootmnt}/dev
+
+# Move virtual filesystems over to the real filesystem
+mount -n -o move /sys ${rootmnt}/sys
+mount -n -o move /proc ${rootmnt}/proc
+
+# don't leak too much of env - some init(8) don't clear it
+# (keep init, rootmnt)
+unset debug
+unset ROOTFLAGS
+unset ROOTFSTYPE
+unset ROOTDELAY
+unset ROOT
+unset quiet
+unset readonly
+unset OTA
+
+# Chain to real filesystem
+exec run-init ${rootmnt} ${init} "$@" <${rootmnt}/dev/console >${rootmnt}/dev/console 2>&1
+echo "Could not execute run-init. Go to emergency shell"
+exec sh

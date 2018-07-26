@@ -1,0 +1,31 @@
+Source: nx-renderer
+Priority: optional
+Maintainer: Chanho Park <chanho61.park@samsung.com>,
+	HyejungKwon <cjscld15@nexell.co.kr>,
+	Sungwoo Park <swpark@nexell.co.kr>
+Uploaders: Chanho Park <chanho61.park@samsung.com>
+Build-Depends:
+ debhelper (>= 9),
+ dh-autoreconf,
+ libdrm-dev
+Standards-Version: 3.9.8
+Section: libs
+
+Package: nx-renderer
+Architecture: any-arm arm64
+Depends:
+ ${shlibs:Depends},
+ libdrm-nexell,
+ ${misc:Depends},
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Description: Nexell DRM Renderer Library
+
+Package: nx-renderer-dev
+Section: libdevel
+Architecture: any
+Depends:
+ nx-renderer (= ${binary:Version}),
+ ${misc:Depends},
+Multi-Arch: same
+Description: Development package for nexell drm renderer

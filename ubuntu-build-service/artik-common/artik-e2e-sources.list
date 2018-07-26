@@ -1,0 +1,2 @@
+deb http://repo.artik.cloud/artik/bin/pub/artik/ubuntu xenial main
+deb-src http://repo.artik.cloud/artik/bin/pub/artik/ubuntu xenial main

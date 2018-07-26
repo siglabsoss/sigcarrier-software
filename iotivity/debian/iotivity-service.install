@@ -1,0 +1,10 @@
+usr/lib/*/libBMISensorBundle.so
+usr/lib/*/libDISensorBundle.so
+usr/lib/*/libTGMSDKLibrary.so
+usr/lib/*/libHueBundle.so
+usr/lib/*/librcs_client.so
+usr/lib/*/librcs_common.so
+usr/lib/*/librcs_container.so
+usr/lib/*/librcs_server.so
+usr/lib/*/libESEnrolleeSDK.so
+

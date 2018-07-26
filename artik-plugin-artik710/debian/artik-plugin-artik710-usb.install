@@ -1,0 +1,2 @@
+prebuilt/adbd/start_adbd.sh usr/bin/
+prebuilt/rndis/start_rndis.sh usr/bin/

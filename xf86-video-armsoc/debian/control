@@ -1,0 +1,193 @@
+Source: xf86-video-armsoc
+Section: x11
+Priority: optional
+XSBC-Original-Maintainer: Marcin Juszkiewicz <marcin@juszkiewicz.com.pl>
+Maintainer: Ubuntu Developers <ubuntu-devel@lists.ubuntu.com>
+Build-Depends: debhelper (>= 8),
+               quilt,
+               dh-autoreconf,
+               libdrm-dev (>= 2.4.33-3),
+               libudev-dev,
+               libxext-dev,
+               pkg-config,
+               x11proto-core-dev,
+               x11proto-fonts-dev,
+               x11proto-gl-dev,
+               x11proto-xf86dri-dev,
+               xutils-dev,
+               xserver-xorg-dev (>= 2:1.16.99.901)
+Standards-Version: 3.9.4
+
+Package: xserver-xorg-video-armsoc
+Architecture: armel armhf
+Depends: xserver-xorg-video-armsoc-exynos, ${misc:Depends}
+Description: X.Org X server -- ARM SoC display driver (transitional package)
+ This driver for the X.Org X server (see xserver-xorg for a further
+ description) provides support for OMAP2 and newer devices including
+ Samsung Exynos5.
+ .
+ The driver depends on drm support in the kernel, which is
+ in the staging area of the mainline kernel since version 3.3.
+ .
+ More information about X.Org can be found at:
+  * <URL:http://www.X.org>
+  * <URL:http://xorg.freedesktop.org>
+  * <URL:http://lists.freedesktop.org/mailman/listinfo/xorg>
+
+Package: xserver-xorg-video-armsoc-exynos
+Architecture: armel armhf
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         ${xviddriver:Depends}
+Conflicts: xserver-xorg-video-armsoc-pl111
+Breaks: xserver-xorg-video-armsoc (<< 0.6.0)
+Replaces: xserver-xorg-video-armsoc (<< 0.6.0)
+Provides: ${xviddriver:Provides}
+Description: X.Org X server -- ARM SoC display driver for Exynos DRM
+ This driver for the X.Org X server (see xserver-xorg for a further
+ description) provides support for OMAP2 and newer devices including
+ Samsung Exynos5.
+ .
+ The driver depends on drm support in the kernel, which is
+ in the staging area of the mainline kernel since version 3.3.
+ .
+ More information about X.Org can be found at:
+  * <URL:http://www.X.org>
+  * <URL:http://xorg.freedesktop.org>
+  * <URL:http://lists.freedesktop.org/mailman/listinfo/xorg>
+ .
+ This package contains the armsoc driver for the Exynos DRM driver.
+
+Package: xserver-xorg-video-armsoc-pl111
+Architecture: armel armhf
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         ${xviddriver:Depends}
+Conflicts: xserver-xorg-video-armsoc-exynos
+Breaks: xserver-xorg-video-armsoc (<< 0.6.0)
+Replaces: xserver-xorg-video-armsoc (<< 0.6.0)
+Provides: ${xviddriver:Provides}
+Description: X.Org X server -- ARM SoC display driver for pl111 DRM
+ This driver for the X.Org X server (see xserver-xorg for a further
+ description) provides support for OMAP2 and newer devices including
+ Samsung Exynos5.
+ .
+ The driver depends on drm support in the kernel, which is
+ in the staging area of the mainline kernel since version 3.3.
+ .
+ More information about X.Org can be found at:
+  * <URL:http://www.X.org>
+  * <URL:http://xorg.freedesktop.org>
+  * <URL:http://lists.freedesktop.org/mailman/listinfo/xorg>
+ .
+ This package contains the armsoc driver for the pl111 DRM driver.
+
+Package: xserver-xorg-video-armsoc-nexell
+Architecture: any-arm arm64
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         ${xviddriver:Depends}
+Conflicts: xserver-xorg-video-armsoc-pl111,
+	xserver-xorg-video-armsoc-exynos
+Breaks: xserver-xorg-video-armsoc (<< 0.6.0)
+Replaces: xserver-xorg-video-armsoc (<< 0.6.0)
+Provides: ${xviddriver:Provides}
+Description: X.Org X server -- ARM SoC display driver for Nexell DRM
+ This driver for the X.Org X server (see xserver-xorg for a further
+ description) provides support for OMAP2 and newer devices including
+ Nexell S5P4418/6818.
+ .
+ The driver depends on drm support in the kernel, which is
+ in the staging area of the mainline kernel since version 3.3.
+ .
+ More information about X.Org can be found at:
+  * <URL:http://www.X.org>
+  * <URL:http://xorg.freedesktop.org>
+  * <URL:http://lists.freedesktop.org/mailman/listinfo/xorg>
+ .
+ This package contains the armsoc driver for the Nexell DRM driver.
+
+Package: xserver-xorg-video-armsoc-exynos-dbg
+Architecture: armel armhf
+Section: debug
+Priority: extra
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         xserver-xorg-video-armsoc-exynos (= ${binary:Version})
+Conflicts: xserver-xorg-video-armsoc-pl111-dbg
+Breaks: xserver-xorg-video-armsoc-dbg (<< 0.6.0)
+Replaces: xserver-xorg-video-armsoc-dbg (<< 0.6.0)
+Description: X.Org X server -- ARM SoC display driver (debug symbols)
+ This driver for the X.Org X server (see xserver-xorg for a further
+ description) provides support for OMAP2 and newer devices including
+ Samsung Exynos5.
+ .
+ The driver depends on drm support in the kernel, which is
+ in the staging area of the mainline kernel since version 3.3.
+ .
+ More information about X.Org can be found at:
+  * <URL:http://www.X.org>
+  * <URL:http://xorg.freedesktop.org>
+  * <URL:http://lists.freedesktop.org/mailman/listinfo/xorg>
+ .
+ This package contains debugging symbols for
+ xserver-xorg-video-armsoc-exynos.
+
+Package: xserver-xorg-video-armsoc-nexell-dbg
+Architecture: any-arm arm64
+Section: debug
+Priority: extra
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         xserver-xorg-video-armsoc-nexell (= ${binary:Version})
+Conflicts: xserver-xorg-video-armsoc-pl111-dbg,
+	xserver-xorg-video-armsoc-exynos-dbg
+Breaks: xserver-xorg-video-armsoc-dbg (<< 0.6.0)
+Replaces: xserver-xorg-video-armsoc-dbg (<< 0.6.0)
+Description: X.Org X server -- ARM SoC display driver (debug symbols)
+ This driver for the X.Org X server (see xserver-xorg for a further
+ description) provides support for OMAP2 and newer devices including
+ Nexell S5P4418/6818.
+ .
+ The driver depends on drm support in the kernel, which is
+ in the staging area of the mainline kernel since version 3.3.
+ .
+ More information about X.Org can be found at:
+  * <URL:http://www.X.org>
+  * <URL:http://xorg.freedesktop.org>
+  * <URL:http://lists.freedesktop.org/mailman/listinfo/xorg>
+ .
+ This package contains debugging symbols for
+ xserver-xorg-video-armsoc-nexell.
+
+Package: xserver-xorg-video-armsoc-pl111-dbg
+Architecture: armel armhf
+Section: debug
+Priority: extra
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         xserver-xorg-video-armsoc-pl111 (= ${binary:Version})
+Conflicts: xserver-xorg-video-armsoc-exynos-dbg
+Breaks: xserver-xorg-video-armsoc-dbg (<< 0.6.0)
+Replaces: xserver-xorg-video-armsoc-dbg (<< 0.6.0)
+Description: X.Org X server -- ARM SoC display driver (debug symbols)
+ This driver for the X.Org X server (see xserver-xorg for a further
+ description) provides support for OMAP2 and newer devices including
+ Samsung Exynos5.
+ .
+ The driver depends on drm support in the kernel, which is
+ in the staging area of the mainline kernel since version 3.3.
+ .
+ More information about X.Org can be found at:
+  * <URL:http://www.X.org>
+  * <URL:http://xorg.freedesktop.org>
+  * <URL:http://lists.freedesktop.org/mailman/listinfo/xorg>
+ .
+ This package contains debugging symbols for
+ xserver-xorg-video-armsoc-pl111.

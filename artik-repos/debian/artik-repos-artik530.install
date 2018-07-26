@@ -1,0 +1,3 @@
+ubuntu/platform/artik530/artik-platform-artik530-sources.list /etc/apt/sources.list.d
+ubuntu/artik-platform-keyring.gpg /var/lib/apt/keyrings
+ubuntu/artik-platform.pref /etc/apt/preferences.d

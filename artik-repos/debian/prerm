@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -e
+
+ARTIK_PLATFORM_KEY="B1984A69"
+
+case "$1" in
+	remove|purge)
+		if [ -x /usr/bin/apt-key ]; then
+			apt-key del "$ARTIK_PLATFORM_KEY"
+		fi
+		;;
+
+	upgrade|deconfigure)
+		;;
+
+	failed-upgrade)
+		;;
+
+	*)
+		echo "prerm called with unknown argument \`$1'" >&2
+		exit 1
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,9 @@
+[Unit]
+Description=RNDIS USB Function
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/start_rndis.sh
+
+[Install]
+WantedBy=multi-user.target

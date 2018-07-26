@@ -1,0 +1,26 @@
+[artik-platform-updates]
+name=artik710 platform - $basearch - Updates
+failovermethod=priority
+baseurl=http://repo.artik.cloud/artik/bin/pub/artik-platform/fedora/artik710/updates/$basearch/
+enabled=1
+priority=50
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-artik-platform
+
+[artik-platform-updates-debuginfo]
+name=_TARGET_NAME platform - $basearch - Updates - Debug
+failovermethod=priority
+baseurl=http://repo.artik.cloud/artik/bin/pub/artik-platform/fedora/artik710/updates/$basearch/debug/
+enabled=0
+priority=50
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-artik-platform
+
+[artik-platform-updates-source]
+name=artik710 platform - $basearch - Updates - Source
+failovermethod=priority
+baseurl=http://repo.artik.cloud/artik/bin/pub/artik-platform/fedora/artik710/updates/source/SRPMS/
+enabled=0
+priority=50
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-artik-platform

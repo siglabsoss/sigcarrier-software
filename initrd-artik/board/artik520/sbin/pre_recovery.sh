@@ -1,0 +1,1 @@
+../../artik1020/sbin/pre_recovery.sh

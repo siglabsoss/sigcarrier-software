@@ -1,0 +1,128 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+export RELEASE = True
+export TARGET_TRANSPORT = IP
+export SECURED = 0
+export LOGGING = 0
+export ES_TARGET_ENROLLEE = linux
+export ES_ROLE = enrollee
+DEB_HOST_ARCH_CPU ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_CPU)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	export NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+endif
+ifeq (True, $(RELEASE))
+	export build_mode = release
+else
+	export build_mode = debug
+endif
+ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
+	export PKG_CONFIG = $(DEB_HOST_MULTIARCH)-pkg-config
+	export PKG_CONFIG_PATH = /usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig
+	export PKG_CONFIG_SYSROOT_DIR = /usr
+endif
+ifneq (,$(filter arm,$(DEB_HOST_ARCH_CPU)))
+	export BUILD_ARCH = armeabi-v7a-hard
+endif
+ifneq (,$(filter arm64,$(DEB_HOST_ARCH_CPU)))
+	export BUILD_ARCH = arm64
+endif
+ifneq (,$(filter amd64,$(DEB_HOST_ARCH_CPU)))
+	export BUILD_ARCH = x86_64
+endif
+
+%:
+	dh $@ 
+
+override_dh_auto_build:
+	scons TARGET_OS=linux TARGET_ARCH=$(BUILD_ARCH) \
+		RELEASE=$(RELEASE) SECURED=$(SECURED) \
+		TARGET_TRANSPORT=$(TARGET_TRANSPORT) \
+		ES_TARGET_ENROLLEE=$(ES_TARGET_ENROLLEE) \
+		ES_ROLE=$(ES_ROLE) \
+		LOGGING=$(LOGGING) VERBOSE=yes \
+		TC_PREFIX=$(DEB_HOST_GNU_TYPE)- \
+		TC_PATH=/usr \
+		-j $(NUMJOBS)
+
+override_dh_install:
+	mkdir -p debian/tmp
+	scons install --prefix=/usr \
+		--install-sandbox=$(PWD)/debian/tmp \
+		LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)/ \
+		TARGET_OS=linux TARGET_ARCH=$(BUILD_ARCH) \
+		RELEASE=$(RELEASE) SECURED=$(SECURED) \
+		TARGET_TRANSPORT=$(TARGET_TRANSPORT) \
+		ES_TARGET_ENROLLEE=$(ES_TARGET_ENROLLEE) \
+		ES_ROLE=$(ES_ROLE) \
+		LOGGING=$(LOGGING) \
+		TC_PREFIX=$(DEB_HOST_GNU_TYPE)- \
+		TC_PATH=/usr
+
+	cp out/linux/*/$(build_mode)/lib*.so debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
+	cp out/linux/*/$(build_mode)/lib*.a debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
+	mkdir -p debian/tmp/usr/include
+	cp ./resource/csdk/security/include/pinoxmcommon.h debian/tmp/usr/include
+	cp ./resource/csdk/security/provisioning/include/oxm/*.h debian/tmp/usr/include
+	cp ./resource/csdk/security/provisioning/include/internal/*.h debian/tmp/usr/include
+	cp ./resource/csdk/security/provisioning/include/*.h debian/tmp/usr/include
+	mkdir -p debian/tmp/usr/include/service/resource-encapsulation
+	mkdir -p debian/tmp/usr/include/service/resource-container
+	mkdir -p debian/tmp/usr/include/service/resource-hosting
+	mkdir -p debian/tmp/usr/include/service/resource-directory
+	mkdir -p debian/tmp/usr/include/service/things-manager
+	mkdir -p debian/tmp/usr/include/service/easy-setup
+	mkdir -p debian/tmp/usr/include/resource
+	cp resource/csdk/stack/include/*.h debian/tmp/usr/include/resource
+	cp resource/csdk/connectivity/inc/*.h debian/tmp/usr/include/resource
+	cp resource/csdk/logger/include/*.h debian/tmp/usr/include/resource
+	cp service/easy-setup/inc/*.h debian/tmp/usr/include/service/easy-setup/
+	cp service/easy-setup/enrollee/inc/*.h debian/tmp/usr/include/service/easy-setup/
+	cp service/resource-encapsulation/include/RCSRepresentation.h debian/tmp/usr/include/service/resource-encapsulation/
+	cp service/resource-encapsulation/include/RCSSeparateResponse.h debian/tmp/usr/include/service/resource-encapsulation/
+	cp service/resource-hosting/include/*.h debian/tmp/usr/include/service/resource-hosting/
+	cp service/resource-directory/include/*.h debian/tmp/usr/include/service/resource-directory/
+	mkdir -p debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/examples/OICMiddle/OICMiddle debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/devicediscoveryclient debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/devicediscoveryserver debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/fridgeclient debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/fridgeserver debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/garageclient debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/garageserver debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/groupclient debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/groupserver debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/lightserver debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/presenceclient debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/presenceserver debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/roomclient debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/roomserver debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/simpleclient debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/simpleclientHQ debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/simpleclientserver debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/simpleserver debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/simpleserverHQ debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/threadingsample debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/csdk/stack/samples/linux/SimpleClientServer/occlient debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/csdk/stack/samples/linux/SimpleClientServer/occlientbasicops debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/csdk/stack/samples/linux/SimpleClientServer/occlientcoll debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/csdk/stack/samples/linux/SimpleClientServer/occlientslow debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/csdk/stack/samples/linux/SimpleClientServer/ocserver debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/csdk/stack/samples/linux/SimpleClientServer/ocserverbasicops debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/csdk/stack/samples/linux/SimpleClientServer/ocservercoll debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/csdk/stack/samples/linux/SimpleClientServer/ocserverslow debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/service/resource-encapsulation/examples/linux/sampleResourceClient debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/service/resource-encapsulation/examples/linux/sampleResourceServer debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/service/resource-container/ContainerSample debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/service/resource-hosting/SampleApp/linux/sampleprovider debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/service/resource-hosting/SampleApp/linux/sampleconsumer debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/service/resource-hosting/SampleApp/linux/sampleresourcehosting debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/service/things-manager/sampleapp/linux/configuration/con-server debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/service/things-manager/sampleapp/linux/configuration/con-client debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/service/things-manager/sampleapp/linux/configuration/bootstrapserver debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/oic_svr_db_server.dat debian/tmp/usr/bin
+	cp out/linux/*/$(build_mode)/resource/examples/oic_svr_db_client.dat debian/tmp/usr/bin
+
+	dh_install

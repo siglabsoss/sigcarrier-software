@@ -1,0 +1,5 @@
+usr/include/libweston-3
+usr/lib/*/libweston-3.so
+usr/lib/*/libweston-desktop-3.so
+usr/lib/*/pkgconfig/libweston-3.pc
+usr/lib/*/pkgconfig/libweston-desktop-3.pc

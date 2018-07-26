@@ -1,0 +1,13 @@
+gstreamer1.0-plugins-camera-s5p6818
+gstreamer1.0-plugins-renderer
+gstreamer1.0-plugins-scaler
+gstreamer1.0-plugins-video-dec
+gstreamer1.0-plugins-video-enc
+gstreamer1.0-plugins-video-sink
+nx-drm-allocator
+nx-renderer
+nx-scaler
+nx-v4l2
+nx-video-api
+nx-gst-meta
+libdrm-nexell

@@ -1,0 +1,16 @@
+artik-ubuntu-meta-base
+artik-ubuntu-meta-network
+artik-ubuntu-meta-misc
+artik-ubuntu-meta-nexell
+
+artik-plugin-artik530-bluetooth
+artik-plugin-artik530-fstab
+artik-plugin-artik530-audio
+artik-plugin-artik530-wifi
+artik-plugin-artik530-usb
+artik-plugin-artik530-zigbee
+artik-plugin-artik530-zram
+artik-plugin-artik530-security
+
+artik-repos-artik533s
+security-b2b-artik533s

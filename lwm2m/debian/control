@@ -1,0 +1,30 @@
+Source: wakaama
+Section: libs
+Priority: optional
+Maintainer: Inho Oh <inho48.oh@samsung.com>
+Build-Depends: debhelper (>=9),
+	cmake
+Standards-Version: 3.9.6
+Homepage: https://projects.eclipse.org/projects/technology.wakaama
+#Vcs-Git: https://github.com/eclipse/wakaama.git
+#Vcs-Browser: https://github.com/eclipse/wakaama.git
+
+Package: wakaama
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Implementation of the Open Mobile Alliance's LightWeight M2M protocol (LWM2M)
+
+Package: wakaama-dev
+Architecture: any
+Multi-Arch: same
+Depends: wakaama
+Description: Implementation of the Open Mobile Alliance's LightWeight M2M protocol (LWM2M) - Development files
+
+Package: wakaama-dbg
+Section: debug
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Implementation of the Open Mobile Alliance's LightWeight M2M protocol (LWM2M) - Debug symbols
+

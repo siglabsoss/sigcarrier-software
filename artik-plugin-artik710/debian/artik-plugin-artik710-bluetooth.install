@@ -1,0 +1,5 @@
+scripts/units/brcm-firmware.service /lib/systemd/system/
+prebuilt/bluetooth/etc/bluetooth/BCM4345* etc/bluetooth/
+prebuilt/bluetooth/etc/bluetooth/brcm_patchram_plus etc/bluetooth/
+prebuilt/bluetooth/etc/bluetooth/fwdown.sh etc/bluetooth/
+prebuilt/bluetooth/etc/bluetooth/fwversion.sh etc/bluetooth/

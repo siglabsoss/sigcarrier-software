@@ -1,0 +1,4 @@
+usr/lib/*/liboc.so
+usr/lib/*/liboc_logger.so
+usr/lib/*/liboc_logger_core.so
+usr/lib/*/liboctbstack.so

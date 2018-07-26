@@ -1,0 +1,14 @@
+[Unit]
+Description=alsa audio setting
+After=alsa-state.service
+ConditionFileNotEmpty=!/var/lib/alsa/asound.state
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/audio_setting.sh
+ExecStartPost=/bin/systemctl restart alsa-state.service
+ExecStartPost=/bin/sync
+
+[Install]
+WantedBy=multi-user.target

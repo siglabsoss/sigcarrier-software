@@ -1,0 +1,12 @@
+artik-plugin
+artik-plugin-license
+artik-plugin-bluetooth-common
+artik-plugin-network-common
+artik-plugin-audio-common
+artik-plugin-usb-common
+artik-plugin-wifi-common
+artik-ota
+zigbeed
+libzigbee
+libsee-linux
+libartik-security

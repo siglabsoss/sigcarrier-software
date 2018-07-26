@@ -1,0 +1,33 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+export DB_VERBOSE=1
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+
+ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
+	export CXX = $(DEB_HOST_GNU_TYPE)-g++
+endif
+
+%:
+	dh $@ --parallel
+
+override_dh_auto_build:
+	make -C Gateway
+
+override_dh_shlibdeps:
+	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):/usr/$(DEB_HOST_MULTIARCH)/lib dh_shlibdeps --dpkg-shlibdeps-params="--ignore-missing-info"
+
+override_dh_install:
+	mkdir -p debian/tmp/usr/bin
+	mkdir -p debian/tmp/usr/etc/tomygateway/config
+	cp Gateway/Build/TomyGateway debian/tmp/usr/bin/
+	cp Gateway/param.conf debian/tmp/usr/etc/tomygateway/config/
+
+	dh_install
+
+override_dh_clean:
+	make -C Gateway clean
+
+override_dh_strip:
+	dh_strip --dbg-package=tomy-gateway-dbg

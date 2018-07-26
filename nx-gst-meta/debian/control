@@ -1,0 +1,27 @@
+Source: nx-gst-meta
+Priority: optional
+Maintainer: Chanho Park <chanho61.park@samsung.com>,
+	Sungwon Jo <doriya@nexell.co.kr>,
+	Sungwoo Park <swpark@nexell.co.kr>
+Uploaders: Chanho Park <chanho61.park@samsung.com>
+Build-Depends: libgstreamer1.0-dev (>= 1.8.0),  libgstreamer-plugins-base1.0-dev (>= 1.8.1), autotools-dev, dh-autoreconf, automake (>= 1.14), autoconf (>= 2.69), libtool (>= 2.2.6), autopoint (>= 0.17), debhelper (>= 9), dpkg-dev (>= 1.15.1), pkg-config (>= 0.11.0), libglib2.0-dev (>= 2.40), gstreamer1.0-plugins-base (>= 1.8.0)
+Standards-Version: 3.9.8
+Section: libs
+
+Package: nx-gst-meta
+Architecture: any-arm arm64
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Description: Nexell GStreamer Meta Library
+
+Package: nx-gst-meta-dev
+Section: libdevel
+Architecture: any
+Depends:
+ nx-gst-meta (= ${binary:Version}),
+ ${misc:Depends},
+Multi-Arch: same
+Description: Development package for nexell gstreamer meta

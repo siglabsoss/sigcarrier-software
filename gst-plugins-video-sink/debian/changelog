@@ -1,0 +1,25 @@
+gst-plugins-video-sink (1.0.8) xenial; urgency=medium
+
+  * Add Null check
+
+ -- Chanho Park <chanho61.park@samsung.com>  Wed, 13 Sep 2017 13:15:51 +0900
+
+gst-plugins-video-sink (1.0.7) xenial; urgency=medium
+
+  * revert commit "add EOS handler(bc4ed4b)"
+
+ -- Hwansoon Sung <hs2704.sung@hs2704.sung@samsung.com>  Wed, 24 Aug 2017 17:00:11 +0900
+
+gst-plugins-video-sink (1.0.6) xenial; urgency=medium
+
+  * add EOS handler
+  * add CRTC and plane property
+  * add for flush implementation
+
+ -- Hwansoon Sung <hs2704.sung@hs2704.sung@samsung.com>  Wed, 23 Aug 2017 15:16:21 +0900
+
+gst-plugins-video-sink (1.0.3) unstable; urgency=medium
+
+  * Initial release
+
+ -- Chanho Park <chanho61.park@samsung.com>  Tue, 27 Dec 2016 05:13:44 +0900

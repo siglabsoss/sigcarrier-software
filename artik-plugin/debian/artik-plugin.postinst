@@ -1,0 +1,72 @@
+#!/bin/sh
+# This script can be called in the following ways:
+#
+# After the package was installed:
+#       <postinst> configure <old-version>
+#
+#
+# If prerm fails during upgrade or fails on failed upgrade:
+#       <old-postinst> abort-upgrade <new-version>
+#
+# If prerm fails during deconfiguration of a package:
+#       <postinst> abort-deconfigure in-favour <new-package> <version>
+#                  removing <old-package> <version>
+#
+# If prerm fails during replacement due to conflict:
+#       <postinst> abort-remove in-favour <new-package> <version>
+
+set -e
+
+case "$1" in
+	configure)
+		# Set default target to multi-user
+		systemctl set-default multi-user.target
+		# Limit journal size
+		sed -i "s/#SystemMaxUse=/SystemMaxUse=10M/" /etc/systemd/journald.conf
+		# reset hardware watchdog
+		sed -i 's/#ShutdownWatchdogSec=10min/ShutdownWatchdogSec=10s/g' /etc/systemd/system.conf
+
+		# wpa_supplicant
+		sed -i 's/INTERFACES=\"\"/INTERFACES=\"-iwlan0\"/g' /etc/sysconfig/wpa_supplicant
+		sed -i 's/DRIVERS=\"\"/DRIVERS=\"-Dnl80211\"/g' /etc/sysconfig/wpa_supplicant
+
+		# ignore power key action
+		sed -i "s/#HandlePowerKey=poweroff/HandlePowerKey=ignore/" /etc/systemd/logind.conf
+
+		# Set tcp pacing ca ratio to 200
+		if [ `grep -c tcp_pacing_ca_ratio /etc/sysctl.conf` != 0 ]; then
+			sed -i "s/net.ipv4.tcp_pacing_ca_ratio=.*/net.ipv4.tcp_pacing_ca_ratio=200/g" /etc/sysctl.conf
+		else
+			echo "net.ipv4.tcp_pacing_ca_ratio=200" >> /etc/sysctl.conf
+		fi
+
+		sed -i "s|/usr/lib/modules|/lib/modules|" /lib/systemd/system/modules-umount.service
+
+		# Permit root login
+		sed -i 's/prohibit-password/yes/' /etc/ssh/sshd_config
+
+		# Resolve conflicts for connman
+		sed -i 's/\#except-interface=/except-interface=lo/g'  /etc/dnsmasq.conf
+
+		# Enable sshd-keygen.service
+		sed -i "/^After=/ s/$/ sshd-keygen.service/" /lib/systemd/system/ssh.service
+		sed -i "/^After=/ a Wants=sshd-keygen.service" /lib/systemd/system/ssh.service
+
+		# Enable units
+		systemctl enable systemd-timesyncd.service
+		systemctl enable systemd-resolved.service
+		systemctl enable booting-done.service
+		systemctl enable rfkill-unblock.service
+		systemctl enable modules-umount.service
+
+		;;
+	abort-upgrade|abort-deconfigure|abort-remove)
+		;;
+	*)
+		echo "$0 called with unknown argument \`$1'" 1>&2
+		exit 1
+		;;
+esac
+
+#DEBHELPER#
+exit 0

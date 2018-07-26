@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+ARCHIVE_KEYRING="/var/lib/apt/keyrings/artik-platform-keyring.gpg"
+
+case "$1" in
+	configure)
+		if [ -x /usr/bin/apt-key ]; then
+			echo "Importing artik platform keyring"
+			apt-key add "$ARCHIVE_KEYRING"
+		fi
+		;;
+
+	abort-upgrade|abort-remove|abort-deconfigure)
+		;;
+
+	*)
+		echo "postinst called with unknown argument \`$1'" >&2
+		exit 1
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

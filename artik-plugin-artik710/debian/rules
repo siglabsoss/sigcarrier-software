@@ -1,0 +1,8 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	dh_auto_install
+	install --mode=644 -D prebuilt/fstab/fstab.ubuntu debian/artik-plugin-artik710-fstab/etc/fstab

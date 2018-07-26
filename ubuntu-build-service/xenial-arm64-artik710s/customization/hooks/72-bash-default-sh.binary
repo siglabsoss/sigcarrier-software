@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "I: Set default sh to bash"
+cd ./binary/bin
+ln -sf bash sh

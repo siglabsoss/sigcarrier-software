@@ -1,0 +1,37 @@
+Source: iotivity
+Section: libs
+Priority: optional
+Maintainer: Chanho Park <chanho61.park@samsung.com>
+Build-Depends: debhelper (>=9),
+	libboost-dev,
+	libboost-thread-dev,
+	libcurl4-openssl-dev,
+	libglib2.0-dev,
+	uuid-dev,
+	scons:all,
+	python-dev
+Standards-Version: 3.9.6
+Homepage: https://www.iotivity.org/
+#Vcs-Git: git://anonscm.debian.org/collab-maint/iotivity.git
+#Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/iotivity.git
+
+Package: iotivity
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: An open source reference implementation of the OIC standard specifications IoTivity Base Libraries are included.
+
+Package: iotivity-dev
+Architecture: any
+Depends: iotivity
+Description: The iotivity-dev package contains libraries and header files for developing applications that use iotivity.
+
+Package: iotivity-service
+Architecture: any
+Depends: iotivity,
+	${shlibs:Depends}, ${misc:Depends}
+Description: The iotivity-service package contains service libraries files for developing application that use iotivity-service.
+
+Package: iotivity-test
+Architecture: any
+Depends: iotivity
+Description: The iotivity-test package contains example files to show how the iotivity works using iotivity-test

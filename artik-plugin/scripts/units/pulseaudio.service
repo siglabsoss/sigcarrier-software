@@ -1,0 +1,11 @@
+[Unit]
+Description=pulseaudio service
+After=dbus.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/pulseaudio --system --daemonize=no --disallow-exit
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

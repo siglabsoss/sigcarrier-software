@@ -1,0 +1,15 @@
+artik-ubuntu-meta-base
+artik-ubuntu-meta-network
+artik-ubuntu-meta-misc
+artik-ubuntu-meta-nexell
+
+# artik710
+artik-plugin-artik710-bluetooth
+artik-plugin-artik710-fstab
+artik-plugin-artik710-audio
+artik-plugin-artik710-wifi
+artik-plugin-artik710-usb
+artik-plugin-artik710-zigbee
+artik-plugin-artik710-security
+artik-plugin-artik710-license
+artik-repos-artik710

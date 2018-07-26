@@ -1,0 +1,61 @@
+diff --git a/Makefile.in b/Makefile.in
+index d9b1c55..9e57ca0 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -18,6 +18,9 @@ ETAGS = @ETAGS@
+ abs_builddir = @abs_builddir@
+ top_builddir = @top_builddir@
+ package = @PACKAGE_TARNAME@-@PACKAGE_VERSION@
++prefix = @prefix@
++includerootdir = $(DESTDIR)$(prefix)/include
++librootdir = $(DESTDIR)$(prefix)/lib
+
+ # files and flags
+ SOURCES:= pdu.c net.c debug.c encode.c uri.c coap_list.c resource.c hashkey.c \
+@@ -81,7 +84,7 @@ $(LIB):	$(OBJECTS)
+ 	$(RANLIB) $@
+ 
+ $(LIBSO):	$(OBJECTS)
+-	$(LD) $(LDSOFLAGS) $(LDFLAGS) -o $@ $^
++	$(LD) $(LDSOFLAGS) $(LDFLAGS) -soname libcoap.so --build-id -o $@ $^
+
+ clean:
+ 	@rm -f $(PROGRAM) main.o $(LIB) $(LIBSO) $(OBJECTS)
+@@ -104,6 +107,16 @@ dist:	$(FILES) $(SUBDIRS)
+ 	done
+ 	tar czf $(package).tar.gz $(DISTDIR)
+
++install:
++	test -d $(includerootdir)/libcoap || mkdir -p $(includerootdir)/libcoap
++	test -d $(librootdir) || mkdir -p $(librootdir)
++	cp -r $(HEADERS) $(includerootdir)/libcoap/
++	cp $(LIB) $(librootdir)/
++ifdef BUILD_SO
++	cp $(LIBSO) $(librootdir)/$(LIBSO).@LIBSO_VERSION@
++	test -h $(LIBSO) || ln -s $(LIBSO).@LIBSO_VERSION@ $(librootdir)/$(LIBSO)
++endif
++
+ TAGS:	
+ 	$(ETAGS) -o $@.new $(SOURCES) 
+ 	$(ETAGS) -a -o $@.new $(HEADERS) 
+diff --git a/configure.in b/configure.in
+index 77f6c8f..edf763d 100644
+--- a/configure.in
++++ b/configure.in
+@@ -67,7 +67,7 @@ AC_ARG_WITH(tests,
+ 
+ AC_ARG_WITH(shared,
+   [AS_HELP_STRING([--with-shared],[build shared library])],	
+-  [BUILD_SO="BUILD_SO=1"],
++  [BUILD_SO="BUILD_SO=1" LIBSO_VERSION=AC_PACKAGE_VERSION],
+   [])
+ 
+ # disambiguate between autoconf generated setups and contiki / lwip setups
+@@ -87,6 +87,7 @@ AC_CHECK_FUNCS([memset select socket strcasecmp strrchr getaddrinfo strnlen])
+ 
+ AC_SUBST(TESTS)
+ AC_SUBST(BUILD_SO)
++AC_SUBST(LIBSO_VERSION)
+
+ AC_CONFIG_HEADERS([config.h])
+ 

@@ -1,0 +1,30 @@
+Source: artik-repos
+Section: Miscellaneous
+Priority: standard
+Maintainer: Jae-young Hwang <j-zero.hwang@samsung.com>
+Uploaders: Jae-young Hwang <j-zero.hwang@samsung.com>
+Build-Depends: debhelper (>= 9)
+
+Package: artik-repos-artik530
+Architecture: any-arm
+Description: ARTIK530 Ubuntu package repository
+
+Package: artik-repos-artik530s
+Architecture: any-arm
+Description: ARTIK530s Ubuntu package repository
+
+Package: artik-repos-artik533s
+Architecture: any-arm
+Description: ARTIK533s Ubuntu package repository
+
+Package: artik-repos-artik710
+Architecture: any-arm arm64
+Description: ARTIK710 Ubuntu package repository
+
+Package: artik-repos-artik710s
+Architecture: any-arm arm64
+Description: ARTIK710s Ubuntu package repository
+
+Package: artik-repos-e2e
+Architecture: any-arm arm64
+Description: ARTIK Ubuntu E2E(artik-sdk/ENM/BLE onboarding) package repository

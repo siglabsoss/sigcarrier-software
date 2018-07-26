@@ -1,0 +1,6 @@
+# Nexell package sysroot
+nx-drm-allocator-dev
+nx-renderer-dev
+nx-scaler-dev
+nx-v4l2-dev
+nx-gst-meta-dev

@@ -1,0 +1,10 @@
+[Unit]
+Description=Set high priority to eth0
+After=connman.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/ip -6 route add fe80::/64 dev eth0 metric 1
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,33 @@
+Source: libcoap
+Section: libs
+Priority: optional
+Maintainer: Inho Oh <inho48.oh@samsung.com>
+Build-Depends: debhelper (>=9),
+	dh-autoreconf,
+	autoconf,
+	automake
+Standards-Version: 3.9.6
+Homepage: https://libcoap.net/
+#Vcs-Git: https://github.com/obgm/libcoap
+#Vcs-Browser: https://github.com/obgm/libcoap
+
+Package: libcoap
+Architecture: any
+Multi-Arch: same
+Provides: libcoap-1-0
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: C-Implementation of CoAP
+
+Package: libcoap-dev
+Architecture: any
+Multi-Arch: same
+Depends: libcoap
+Description: C-Implementation of CoAP - Development files
+
+Package: libcoap-dbg
+Section: debug
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: C-Implementation of CoAP - Debug symbols
+

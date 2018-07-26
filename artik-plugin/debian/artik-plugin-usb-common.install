@@ -1,0 +1,4 @@
+prebuilt/adbd/adbd usr/bin/
+scripts/units/adbd.service lib/systemd/system/
+scripts/units/rndis.service lib/systemd/system/
+scripts/rules/99-adb-restart.rules etc/udev/rules.d/
