@@ -357,10 +357,7 @@
 	"/Image ext4 $rootdev $bootpart;" \
 	"/uInitrd ext4 $rootdev $bootpart;" \
 	"/ramdisk.gz ext4 $rootdev $bootpart;" \
-	"/s5p6818-artik710-raptor-rev03.dtb ext4 $rootdev $bootpart;" \
-	"/s5p6818-artik710-raptor-rev02.dtb ext4 $rootdev $bootpart;" \
-	"/s5p6818-artik710-raptor-rev01.dtb ext4 $rootdev $bootpart;" \
-	"/s5p6818-artik710-explorer.dtb ext4 $rootdev $bootpart;" \
+	"/s5p6818-artik710-sigcarrier-rev02.dtb ext4 $rootdev $bootpart;" \
 	"boot part $rootdev $bootpart;" \
 	"modules part $rootdev $modulespart;" \
 	"rootfs part $rootdev $rootpart;" \
@@ -374,7 +371,7 @@
 	"ramdiskaddr=0x49000000\0"					\
 	"ramdisk_file=uInitrd\0"					\
 	"fdtaddr=0x4a000000\0"						\
-	"fdtfile=\0"							\
+	"fdtfile=s5p6818-artik710-sigcarrier-rev02.dtb\0"		\
 	"load_fdt="							\
 		"if test -z \"$fdtfile\"; then "			\
 		"loop=$board_rev; "					\
